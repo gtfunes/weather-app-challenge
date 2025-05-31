@@ -18,6 +18,10 @@ To run the app, first install dependencies: `npm i`. Then use either `npm run io
 - **[@reduxjs/toolkit](https://redux-toolkit.js.org/)** – Simplified Redux logic and async support
 - **[react-redux](https://react-redux.js.org/)** – React bindings for Redux
 
+### UI & Design System
+
+- **[Gluestack UI](https://ui.gluestack.io/)** – A headless component library for React Native and web, offering a customizable design system with built-in support for theming, accessibility, responsive styles, and utility props (formerly NativeBase)
+
 ### Navigation
 
 - **[@react-navigation/native](https://reactnavigation.org/)** – Navigation container for RN apps
