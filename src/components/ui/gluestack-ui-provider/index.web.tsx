@@ -1,22 +1,27 @@
+
 'use client';
-import React, { useEffect, useLayoutEffect } from 'react';
-import { config } from './config';
+import { setFlushStyles } from '@gluestack-ui/nativewind-utils/flush';
 import { OverlayProvider } from '@gluestack-ui/overlay';
 import { ToastProvider } from '@gluestack-ui/toast';
-import { setFlushStyles } from '@gluestack-ui/nativewind-utils/flush';
+import React, { useEffect, useLayoutEffect } from 'react';
+
+import { config } from './config';
 import { script } from './script';
 
 export type ModeType = 'light' | 'dark' | 'system';
 
 const variableStyleTagId = 'nativewind-style';
 const createStyle = (styleTagId: string) => {
+  // @ts-ignore
   const style = document.createElement('style');
   style.id = styleTagId;
+  // @ts-ignore
   style.appendChild(document.createTextNode(''));
   return style;
 };
 
 export const useSafeLayoutEffect =
+  // @ts-ignore
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export function GluestackUIProvider({
@@ -26,12 +31,12 @@ export function GluestackUIProvider({
   mode?: ModeType;
   children?: React.ReactNode;
 }) {
-  let cssVariablesWithMode = ``;
+  let cssVariablesWithMode = '';
   Object.keys(config).forEach((configKey) => {
     cssVariablesWithMode +=
-      configKey === 'dark' ? `\n .dark {\n ` : `\n:root {\n`;
+      configKey === 'dark' ? '\n .dark {\n ' : '\n:root {\n';
     const cssVariables = Object.keys(
-      config[configKey as keyof typeof config]
+      config[configKey as keyof typeof config],
     ).reduce((acc: string, curr: string) => {
       acc += `${curr}:${config[configKey as keyof typeof config][curr]}; `;
       return acc;
@@ -41,12 +46,14 @@ export function GluestackUIProvider({
 
   setFlushStyles(cssVariablesWithMode);
 
+  // @ts-ignore
   const handleMediaQuery = React.useCallback((e: MediaQueryListEvent) => {
     script(e.matches ? 'dark' : 'light');
   }, []);
 
   useSafeLayoutEffect(() => {
     if (mode !== 'system') {
+      // @ts-ignore
       const documentElement = document.documentElement;
       if (documentElement) {
         documentElement.classList.add(mode);
@@ -57,7 +64,8 @@ export function GluestackUIProvider({
   }, [mode]);
 
   useSafeLayoutEffect(() => {
-    if (mode !== 'system') return;
+    if (mode !== 'system') { return; }
+    // @ts-ignore
     const media = window.matchMedia('(prefers-color-scheme: dark)');
 
     media.addListener(handleMediaQuery);
@@ -66,7 +74,9 @@ export function GluestackUIProvider({
   }, [handleMediaQuery]);
 
   useSafeLayoutEffect(() => {
+    // @ts-ignore
     if (typeof window !== 'undefined') {
+      // @ts-ignore
       const documentElement = document.documentElement;
       if (documentElement) {
         const head = documentElement.querySelector('head');
@@ -74,7 +84,7 @@ export function GluestackUIProvider({
         if (!style) {
           style = createStyle(variableStyleTagId);
           style.innerHTML = cssVariablesWithMode;
-          if (head) head.appendChild(style);
+          if (head) {head.appendChild(style);}
         }
       }
     }

@@ -1,30 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+
 import {
   Box,
-  VStack,
+  Button,
   HStack,
-  Text,
+  Icon,
   Input,
   InputField,
-  InputSlot,
   InputIcon,
-  Icon,
-  Button,
+  InputSlot,
   Pressable,
   ScrollView,
   Spinner,
+  Text,
   View,
+  VStack,
 } from '@gluestack-ui/themed';
-import { SearchIcon, LocateIcon, ThermometerIcon, DropletIcon, CircleGaugeIcon, FastForwardIcon } from 'lucide-react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchWeather } from '../store/weatherSlice';
-import { RootState, AppDispatch } from '../store';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CircleGaugeIcon, DropletIcon, FastForwardIcon, LocateIcon, SearchIcon, ThermometerIcon } from 'lucide-react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+
 import WeatherImage from '../components/ui/WeatherImage';
 import { getDeviceLocation, getLocationAuthorization } from '../services/location';
+import { AppDispatch, RootState } from '../store';
+import { fetchWeather } from '../store/weatherSlice';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -60,11 +62,11 @@ const HomeScreen = () => {
             const { latitude, longitude } = result.position.coords;
             dispatch(fetchWeather({ lat: latitude.toString(), lon: longitude.toString() }));
           }
-        }
-      )
+        },
+      );
     });
-
-    }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getWeatherInformation = useCallback(() => {
     return [
@@ -78,7 +80,7 @@ const HomeScreen = () => {
           text: 'Humidity',
           data: current ? `${Math.round(current.main.humidity)}%` : null,
           icon: DropletIcon,
-        }
+        },
       ],
       [
         {
@@ -90,7 +92,7 @@ const HomeScreen = () => {
           text: 'Wind Speed',
           data: current ? `${current.wind.speed} m/s` : null,
           icon: FastForwardIcon,
-        }
+        },
       ],
     ];
   }, [current]);
@@ -98,7 +100,10 @@ const HomeScreen = () => {
   const getHourlyForecast = useCallback(() => forecast.slice(0, 8), [forecast]);
 
   useEffect(() => {
-    if (!current) locationButtonPressed();
+    if (!current) {
+      locationButtonPressed();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -113,7 +118,7 @@ const HomeScreen = () => {
         }}>
         <VStack space="lg">
           <Input variant="outline" size="md">
-            <InputSlot backgroundColor='$surface' pl="$3">
+            <InputSlot backgroundColor="$surface" pl="$3">
               <InputIcon as={SearchIcon} />
             </InputSlot>
             <InputField
@@ -123,7 +128,7 @@ const HomeScreen = () => {
               onChangeText={setQuery}
               onSubmitEditing={() => {
                 if (query) {
-                  dispatch(fetchWeather({city: query}));
+                  dispatch(fetchWeather({ city: query }));
                 }
               }}
             />
@@ -150,7 +155,7 @@ const HomeScreen = () => {
           {loading && <Spinner color="$surface" size="large" />}
 
           {current && !loading && !error && (
-            <VStack space="xs" alignItems='center' mt="$2">
+            <VStack space="xs" alignItems="center" mt="$2">
               <Text color="$text" fontSize="$2xl" fontWeight="bold">
                 {current.name}
               </Text>
@@ -168,7 +173,7 @@ const HomeScreen = () => {
           {current && !loading && !error && (
             <VStack space="xs" mt="$2">
                 {getWeatherInformation().map((weatherRow) => (
-                  <HStack key={`container-${weatherRow[0].text}`} justifyContent="center" space='lg' mt="$2">
+                  <HStack key={`container-${weatherRow[0].text}`} justifyContent="center" space="lg" mt="$2">
                     {weatherRow.map((item, idx) => (
                       <Box
                         key={`info-${idx}-${item.text}`}
@@ -179,7 +184,7 @@ const HomeScreen = () => {
                         alignItems="flex-start"
                         style={{ flex: 1, maxWidth: '35%' }}
                       >
-                        <VStack justifyContent='center' space="lg">
+                        <VStack justifyContent="center" space="lg">
                           <HStack alignItems="center" space="sm">
                             <Icon as={item.icon} size="xs" />
                             <Text fontSize="$md" fontWeight="medium">

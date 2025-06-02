@@ -1,6 +1,6 @@
 import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
 import { Platform } from 'react-native';
-import {request, PERMISSIONS, PermissionStatus} from 'react-native-permissions';
+import { PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
 
 type locationPermissionResult = {
     status?: PermissionStatus;
@@ -8,6 +8,7 @@ type locationPermissionResult = {
 };
 
 interface locationPermissionCallback {
+    // eslint-disable-next-line no-unused-vars
     (result: locationPermissionResult): void;
 }
 
@@ -17,6 +18,7 @@ type locationResult = {
 };
 
 interface locationCallback {
+    // eslint-disable-next-line no-unused-vars
     (result: locationResult): void;
 }
 
@@ -26,7 +28,7 @@ export const getLocationAuthorization = (callback?: locationPermissionCallback) 
     }).catch(() => {
         callback?.({ error: 'Location permission request failed' });
     });
-}
+};
 
 export const getDeviceLocation = (callback: locationCallback) => {
     Geolocation.getCurrentPosition(
@@ -36,6 +38,6 @@ export const getDeviceLocation = (callback: locationCallback) => {
         _error => {
             callback({ error: 'Unable to retrieve current location' });
         },
-        { timeout: 5000 }
+        { timeout: 5000 },
     );
-}
+};

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { OPENWEATHERMAP_API_KEY } from '@env';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export interface WeatherInfo {
   temp: number;
@@ -66,16 +66,16 @@ export const fetchWeather = createAsyncThunk(
   'weather/fetchWeather',
   async ({ city, lat, lon }: { city?: string, lat?: string; lon?: string }) => {
     const currentRes = await axios.get<WeatherApiResponse>(
-      `https://api.openweathermap.org/data/2.5/weather?${city ? `q=${city}` : `lat=${lat}&lon=${lon}`}&appid=${OPENWEATHERMAP_API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?${city ? `q=${city}` : `lat=${lat}&lon=${lon}`}&appid=${OPENWEATHERMAP_API_KEY}&units=metric`,
     );
     const forecastRes = await axios.get<WeatherApiResponse>(
-      `https://api.openweathermap.org/data/2.5/forecast?${city ? `q=${city}` : `lat=${lat}&lon=${lon}`}&appid=${OPENWEATHERMAP_API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/forecast?${city ? `q=${city}` : `lat=${lat}&lon=${lon}`}&appid=${OPENWEATHERMAP_API_KEY}&units=metric`,
     );
     return {
       current: currentRes.data,
       forecast: forecastRes.data.list,
     };
-  }
+  },
 );
 
 const weatherSlice = createSlice({
@@ -93,7 +93,7 @@ const weatherSlice = createSlice({
         state.current = action.payload.current;
         state.forecast = action.payload.forecast;
       })
-      .addCase(fetchWeather.rejected, (state, action) => {
+      .addCase(fetchWeather.rejected, (state, _action) => {
         state.loading = false;
         state.error = 'Failed to fetch weather data. Please try again later.';
       });

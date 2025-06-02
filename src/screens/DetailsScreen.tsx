@@ -1,11 +1,12 @@
-import React, { useCallback } from 'react';
-import { FlatList } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 import { Box, HStack, Text, View, VStack } from '@gluestack-ui/themed';
 import { DateTime } from 'luxon';
+import React, { useCallback } from 'react';
+import { FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+
 import WeatherImage from '../components/ui/WeatherImage';
+import { RootState } from '../store';
 
 const DetailsScreen = () => {
   const insets = useSafeAreaInsets();

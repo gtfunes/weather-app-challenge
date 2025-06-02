@@ -1,5 +1,6 @@
-import { createConfig } from '@gluestack-ui/themed';
 import { config as defaultConfig } from '@gluestack-ui/config';
+import { createConfig } from '@gluestack-ui/themed';
+
 import { colors, fonts, fontSizes, space } from './src/theme';
 
 export const config = createConfig({

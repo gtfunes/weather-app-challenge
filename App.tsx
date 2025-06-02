@@ -1,10 +1,11 @@
-import React from 'react';
-import { Provider } from 'react-redux';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
-import { config } from './gluestack.config';
-import { store } from './src/store';
-import NavigationContainer from './src/navigation';
+import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+
+import { config } from './gluestack.config';
+import NavigationContainer from './src/navigation';
+import { store } from './src/store';
 
 export default function App() {
   return (
