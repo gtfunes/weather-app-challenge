@@ -1753,6 +1753,30 @@ PODS:
     - React-logger (= 0.79.2)
     - React-perflogger (= 0.79.2)
     - React-utils (= 0.79.2)
+  - RNPermissions (5.4.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNReanimated (3.18.0):
     - DoubleConversion
     - glog
@@ -2054,6 +2078,7 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -2207,6 +2232,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -2288,12 +2315,13 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: d5dcc564f129632276bd3184e60f053fcd574d6b
   ReactCodegen: fda99a79c866370190e162083a35602fdc314e5d
   ReactCommon: 4d0da92a5eb8da86c08e3ec34bd23ab439fb2461
+  RNPermissions: 1a9dc97a6a3a73642f1041d779db64849124517b
   RNReanimated: 6a437c90e263e4a2202a282f9d6dea0ad28d018d
   RNScreens: c2e3cc506212228c607b4785b315205e28acbf0f
   RNSVG: 50819276c95d91ccd8fbe5cfea7e09a416c9beaa
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 9f110fc4b7aa538663cba3c14cbb1c335f43c13f
 
-PODFILE CHECKSUM: 178b134f8b8b446d320854dd351ec7d157fbcbdc
+PODFILE CHECKSUM: 366e5886ec55e65301642e8e3eb87fee2651c5c9
 
 COCOAPODS: 1.16.2

@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import {
   Box,
   VStack,
@@ -17,15 +18,13 @@ import {
 } from '@gluestack-ui/themed';
 import { SearchIcon, LocateIcon, ThermometerIcon, DropletIcon, CircleGaugeIcon, FastForwardIcon } from 'lucide-react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
 import { fetchWeather } from '../store/weatherSlice';
 import { RootState, AppDispatch } from '../store';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WeatherImage from '../components/ui/WeatherImage';
-import { requestAndGetPosition } from '../services/location';
-import { Alert } from 'react-native';
+import { getDeviceLocation, getLocationAuthorization } from '../services/location';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -36,22 +35,36 @@ const HomeScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, current, forecast, error } = useSelector((state: RootState) => state.weather);
 
-  const locationButtonPressed = useCallback(() =>
-    requestAndGetPosition(result => {
-      if (result.error) {
+  const locationButtonPressed = useCallback(() => {
+    getLocationAuthorization(permission => {
+      if (permission.status === 'denied' || permission.status === 'blocked') {
         Alert.alert(
           'Location Error',
-          result.error,
+          'Location permission is denied or blocked. Please enable location services in your device settings.',
           [{ text: 'OK' }],
         );
         return;
       }
 
-      if (result.position) {
-        const { latitude, longitude } = result.position.coords;
-        dispatch(fetchWeather({ lat: latitude.toString(), lon: longitude.toString() }));
-      }
-    }), []);
+      getDeviceLocation(result => {
+          if (result.error) {
+            Alert.alert(
+              'Location Error',
+              result.error,
+              [{ text: 'OK' }],
+            );
+            return;
+          }
+
+          if (result.position) {
+            const { latitude, longitude } = result.position.coords;
+            dispatch(fetchWeather({ lat: latitude.toString(), lon: longitude.toString() }));
+          }
+        }
+      )
+    });
+
+    }, []);
 
   const getWeatherInformation = useCallback(() => {
     return [
@@ -81,7 +94,12 @@ const HomeScreen = () => {
       ],
     ];
   }, [current]);
+
   const getHourlyForecast = useCallback(() => forecast.slice(0, 8), [forecast]);
+
+  useEffect(() => {
+    if (!current) locationButtonPressed();
+  }, []);
 
   return (
     <View bg="$background" style={{
@@ -150,10 +168,10 @@ const HomeScreen = () => {
           {current && !loading && !error && (
             <VStack space="xs" mt="$2">
                 {getWeatherInformation().map((weatherRow) => (
-                  <HStack justifyContent="center" space='lg' mt="$2">
+                  <HStack key={`container-${weatherRow[0].text}`} justifyContent="center" space='lg' mt="$2">
                     {weatherRow.map((item, idx) => (
                       <Box
-                        key={`${idx}-${item.text}`}
+                        key={`info-${idx}-${item.text}`}
                         bg="$blue100"
                         px="$3"
                         py="$2"
@@ -182,7 +200,7 @@ const HomeScreen = () => {
                 <HStack space="md">
                   {getHourlyForecast().map((item, idx) => (
                     <Box
-                      key={`${idx}-${item.dt_txt}`}
+                      key={`hf-${idx}-${item.dt_txt}`}
                       bg="$blue100"
                       px="$3"
                       py="$2"

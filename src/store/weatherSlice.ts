@@ -95,7 +95,7 @@ const weatherSlice = createSlice({
       })
       .addCase(fetchWeather.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Something went wrong';
+        state.error = 'Failed to fetch weather data. Please try again later.';
       });
   },
 });
