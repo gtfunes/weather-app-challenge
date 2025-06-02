@@ -2,6 +2,8 @@
 
 Weather app for coding challenge. Made using `@react-native-community/cli init` preset.
 
+![iOS](./screenshots/iOS.png) ![Android](./screenshots/Android.png)
+
 Sadly, due to some issues related to the Gluestack UI library and Jest, I was not able to make tests work correctly: [#1475](https://github.com/gluestack/gluestack-ui/issues/1475).
 
 ## Setup
