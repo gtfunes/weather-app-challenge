@@ -6,6 +6,10 @@ Weather app for coding challenge. Made using `@react-native-community/cli init` 
 
 Sadly, due to some issues related to the Gluestack UI library and Jest, I was not able to make tests work correctly: [#1475](https://github.com/gluestack/gluestack-ui/issues/1475).
 
+## App demo
+
+![Demo](./screenshots/Demo.gif)
+
 ## Setup
 
 First install dependencies: `npm i`. Then copy `.env.example` to `.env` and enter your OpenWeatherMap API key.
