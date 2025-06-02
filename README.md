@@ -2,9 +2,13 @@
 
 Weather app for coding challenge. Made using `@react-native-community/cli init` preset.
 
+## Setup
+
+First install dependencies: `npm i`. Then copy `.env.example` to `.env` and enter your OpenWeatherMap API key.
+
 ## Commands
 
-To run the app, first install dependencies: `npm i`. Then use either `npm run ios` or `npm run android`.
+You can run the app using `npm run ios` or `npm run android`.
 
 ## Libraries used
 
